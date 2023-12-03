@@ -15,7 +15,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: Ragnarok0
       MYSQL_USER:  babidi
-      MYSQL_PASSWORD: Ragnarok0
+      MYSQL_PASSWORD: Ragnarok01
     expose:
         - "40000"
     ports:
@@ -24,7 +24,7 @@ services:
      - mariadb:/var/lib/mysql
     networks:
       db:
-              
+
   phpmyadmin:
     image: phpmyadmin
     restart: always
@@ -34,12 +34,13 @@ services:
       - "40001:80"
     environment:
       - PMA_HOST=mariadb
-      - PMA_PORT=3306 
+      - PMA_PORT=3306
     networks:
       db:
 
   santa_api:
     container_name: santa_roulette_api
+    restart: always
     build: .
     ports:
       - "8081:8081"

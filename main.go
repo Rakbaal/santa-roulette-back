@@ -11,13 +11,16 @@ import (
 
 func main() {
 	router := gin.Default()
-	db, err := sql.Open("mysql", "root:Ragnarok0@tcp(127.0.0.1:40000)/santaroulette")
+	db, err := sql.Open("mysql", "root:Ragnarok0@tcp(192.168.0.41:40000)/santaroulette")
 	utils.Check(err)
 	defer db.Close()
 
+	err = db.Ping()
+	utils.Check(err)
+
 	router.Use(utils.Headers())
 
-	router.GET("/ping", controllers.Ping)
+	router.GET("/ping", controllers.Ping(db))
 
 	router.GET("/own/:ownerid/:famille", controllers.Own(db))
 

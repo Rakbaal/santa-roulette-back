@@ -1,7 +1,15 @@
 package controllers
 
-import "github.com/gin-gonic/gin"
+import (
+	"database/sql"
 
-func Ping(c *gin.Context) {
-	c.JSON(200, gin.H{"data": "pong"})
+	"github.com/gin-gonic/gin"
+)
+
+func Ping(db *sql.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var version string
+		db.QueryRow("SELECT VERSION()").Scan(&version)
+		c.JSON(200, gin.H{"data": "Connected to: " + version})
+	}
 }
